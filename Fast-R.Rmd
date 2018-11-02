@@ -1,11 +1,11 @@
 ---
 title: "Fast-R"
-author: "Evan"
+author: "D-Lab"
 date: "11/1/2018"
 output: 
   html_document: 
-    number_sections: yes
     toc: yes
+    toc_float: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -162,7 +162,7 @@ Let's try it!
     
 # Part 2 preview
 What does the following code do? What arguments do these functions take? 
-```{r}
+```{r, eval = F}
 ?table
 ?summary
 
@@ -172,14 +172,14 @@ What does the following code do? What arguments do these functions take?
 ```
 
 What does this code do? Click the first [Useful link](https://ggplot2.tidyverse.org/) to read more about part 2!
-```{r}
+```{r, eval = F}
 install.packages("ggplot2")
 library(ggplot2)
 ?ggplot2
 ```
 
 What does this function do? Check out [this excellent blog post](http://blog.yhat.com/posts/r-lm-summary.html) to learn more. 
-```{r}
+```{r, eval = F}
 ?lm
 ```
 
