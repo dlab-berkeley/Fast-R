@@ -1,2 +1,9 @@
 # Fast-R
-A scalable distillation of D-Lab's R-FUN!damentals series that can be taught in 1 or 2 two-hour sessions. 
+
+## `Fast-R.Rmd` is the markdown file used to make the guide called `Fast-R.html`. 
+
+## `Fast-script.R` is the place where you will type out the code. 
+
+## `gapminder-FiveYearData.csv` is the dataset we will work with.  
+
+## 4. `Fast-R.Rproj` was used to make this GitHub repository. 
