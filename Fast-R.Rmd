@@ -2,8 +2,10 @@
 title: "Fast-R"
 author: "D-Lab"
 date: "11/1/2018"
-output: 
-  html_document: 
+output:
+  word_document:
+    toc: yes
+  html_document:
     toc: yes
     toc_float: yes
 ---
