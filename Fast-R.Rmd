@@ -153,7 +153,7 @@ Click Session --> Set Working Directory --> Choose Directory, and set it to your
 Let's load the "gapminder-FiveYearData.csv" dataset as a variable named `gap` and explore it. 
 ```{r}
 gap = read.csv("gapminder-FiveYearData.csv")
-gap
+head(gap)
 
 # View(gap) is also helpful! 
 ```
@@ -189,7 +189,7 @@ Once you get data loaded into R, you might want to clean it up (i.e., fix spelli
 
 ### In one dimension `$`
 The dollar sign operator will extract one single column. 
-```{r}
+```{r, eval = F}
 gap$country
 gap$year
 ```
@@ -197,9 +197,9 @@ gap$year
 ### In two dimensions `[ , ]`
 Bracket notation is an open and closed bracket with a comma in the middle. Everything before the comma refers to rows, everything after refers to columns. 
 
-For example, `gap_sub = gap[c(1:8, 10) , c(2:4)]` will extract only 
-* rows 1 thru 8 and 10, and 
-* columns 2 thru 4
+For example, `gap_sub = gap[c(1:8, 10) , c(2:4)]` will extract only  
+  * rows 1 thru 8 and 10, and 
+  * columns 2 thru 4
 ... and will save it in a new variable named `gap_sub`
 
 Let's try it! 
@@ -314,7 +314,9 @@ The `ggplot()` function works in layers. Remember to add a plus sign `+` to the 
     
 For example: 
 ```{r}
-install.packages("ggplot2")
+# Make sure to first un-hashtag the below line to install the package
+# install.packages("ggplot2")
+
 library(ggplot2)
 ggplot(data = gap, aes(x = lifeExp, y = gdpPercap, color = continent, shape = continent)) + 
   geom_point(size = 2, alpha = 0.5) + 
@@ -322,7 +324,8 @@ ggplot(data = gap, aes(x = lifeExp, y = gdpPercap, color = continent, shape = co
   xlab("Life expectancy (years)") + 
   ylab("gdpPercap ($)") + 
   theme_bw() + 
-  theme(legend.position = "top")
+  theme(legend.position = "top") + 
+  theme(plot.title = element_text(hjust = 0.5))
 ```
 
 
