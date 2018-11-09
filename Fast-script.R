@@ -149,3 +149,113 @@ getwd()
 # 2. read.csv()
 gap = read.csv("gapminder-FiveYearData.csv")
 hist(gap$lifeExp, col = "pink")
+
+
+
+
+
+
+# Load the "gapminder-FiveYearData.csv" data
+# 1. Remember to first set your working directory to the Fast-R folder you downloaded
+#    Session --> Set Working Directory --> Choose Directory
+# 2. Save it in a variable named gap (remember to use the read.csv function!)
+
+# check you working directory
+getwd()
+dir()
+
+x = 5
+
+gap = read.csv("gapminder-FiveYearData.csv")
+gap
+
+# subset our data
+str(gap)
+class(gap)
+gap$lifeExp
+# Histogram - used for one numeric/integer variable
+hist(gap$lifeExp, col = "purple", 
+     main = "Histogram of Life Expectancy",
+     xlab = "Life expectancy (years)",
+     ylab = "Frequency",
+     las = 1)
+
+# Scatterplot - used for TWO numeric/integer variables
+plot(x = gap$lifeExp, y = gap$gdpPercap,
+     xlab = "Life expectancy (years)",
+     ylab = "GDP per capita ($)", 
+     col = gap$continent)
+
+# Scatterplot - the ggplot2 way
+install.packages("ggplot2")
+library(ggplot2)
+?ggplot
+# You need three things to make a ggplot
+# 1. data
+# 2. "aes"thetics - define x and y coordinates, colors, shapes, etc.
+# 3. geoms - how to represent your data? points, bars, lines, etc.
+ggplot(data = gap, aes(x = lifeExp, y = gdpPercap, color = continent, shape = continent)) + 
+  geom_point(size = 3, alpha = 0.75) + 
+  ggtitle("Life expectancy versus GDP per capita income") + 
+  xlab("Life expectancy (years)") + 
+  ylab("GDP per capita ($)") + 
+  theme_classic() + 
+  theme(legend.position = "bottom")
+  
+# Boxplot - used when you have one categorical variable and one numeric/integer
+ggplot(data = gap, aes(x = continent, y = lifeExp)) +
+  geom_boxplot(fill = "red")
+
+# summarize your data as well! 
+gap$continent
+table(gap$continent)
+prop.table(table(gap$continent))
+
+table(gap$year, gap$continent)
+table(gap$continent, gap$year)
+
+summary(gap)
+summary(gap$lifeExp)
+boxplot(gap$lifeExp, las = 1)
+mean(c(1,2,3,4,100))
+median(c(1,2,3,4,100))
+
+# Challenge! 
+# 1. Create a histogram of population from gap
+hist(gap$pop, col = "darkgreen", xlab = "Number of people")
+# 2. Create a boxplot of population by continent
+boxplot(gap$pop ~ gap$continent)
+ggplot(data = gap, aes(x = continent, y = pop)) + geom_boxplot()
+# 3. Create a scatterplot of population versus lifeExp
+ggplot(gap, aes(x = lifeExp, y = pop, color = continent)) +
+  geom_point()
+# 4. Create a density curve of lifeExp - how do you figure out how to do this?
+ggplot(gap, aes(x = lifeExp, fill = continent)) + 
+  geom_density(alpha = 0.25) #+ 
+  #facet_wrap(~continent)
+# here is some good help: http://www.sthda.com/english/wiki/ggplot2-essentials
+
+library(ggplot2)
+ggplot(data = gap, aes(x = lifeExp, y = gdpPercap, color = continent, shape = continent)) + 
+  geom_point(size = 3, alpha = 0.75) + 
+  ggtitle("Life expectancy versus GDP per capita income") + 
+  xlab("Life expectancy (years)") + 
+  ylab("GDP per capita ($)") + 
+  theme_classic() + 
+  theme(legend.position = "bottom") + 
+  #facet_grid(~continent)
+  facet_wrap(~continent)
+
+# fit a linear regression
+# Can we use gdpPerap to predict lifeExp?
+?lm
+# Y ~ X 
+
+# FIRST STEP! Check for correlation
+?cor.test
+cor.test(gap$lifeExp, gap$gdpPercap)
+
+# now, fit the regression
+gap_lm = lm(gap$lifeExp ~ gap$gdpPercap)
+gap_lm
+summary(gap_lm)
