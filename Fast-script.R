@@ -1,261 +1,200 @@
-# Add comments to our code
-# Script = input (our instructions go here)
+# Navigating RStudio
+## By default, this script will open in the upper left pane of RStudio. Open a new script by clicking File --> New File --> R Script
 
-2 + 2 # (Command + Enter = Mac; Ctrl + Enter = PC)
-cos(pi) 
-
-##
-## Use hashtags to add comments to your script! 
-## Use "USI_R-intro.html" as your guide, but type your code here! 
-##
-## Only comments have hashtags before them; code does not
-##
-## For example, here is where you could type some notes about Navigating RStudio
-
-# the upper left pane is the script (input)
-# the lower left pane is the console (output)
-# upper right = global environment (where data are saved)
-# lower right = plots, packages, help
+## 1. Script: this is your input and is easily savable
+## 2. Console: output appears here and functions as a nice scratch space
+## 3. Global Environment: saved variables will appear here
+## 4. Misc: navigate your file system, plots, install packages, view help
 
 # Variable Assignment
-x = 5 * 10
-x
-52:567
+## We save data in R's memory by storing them in placeholders called "variables", which can be called and manipulated. 
 
-(y = x / 1000)
+x <- 5  # assign the variable
+x       # print it to your console
 
-# rm() will delete a single variable
+y <- log(2.4)
+y
+
+z <- x / y
+z
+
+# Functions and arguments
+## Functions: perform actions on things
+## Arguments: the "things"
+
+# Data types
+## The class() function checks the class ("type") of a variable. There are five basic types for data, listed below.
+
+## 1. Numeric type - 64-bit floating point numbers (decimals); the default for all numbers in R, even numbers that look like integers:
+class(x)
+
+## 2. Integer - whole numbers, positive and negative (including zero). Use the as.integer() function to convert it:
+x_int <- as.integer(x)
+x_int
+class(x_int)
+
+## 3. Character - character string data; always wrapped in quotations:
+x_char <- as.character(x)
+x_char
+class(x_char)
+
+## 4. Logical - TRUE and FALSE only; used for logical testing, data subsetting, and turning function parameters "on" and "off"
+
+"Berkeley" == "berkeley"  # equivalent to (remember, R is case sensitive)
+8 != 7                    # not equivalent to
+3 > 2                     # greater than
+9 <= 9                    # less than/equal to
+
+mean(c(1, 5, 7, NA, 8))   # NA
+
+## Using the help files:
+?mean
+
+mean(c(1, 5, 7, NA, 8), na.rm = TRUE)
+
+## 5. Factor - synonymous with categorical type (can be nominal or ordinal)
+
+## Deleting variables
+### First, view the variables saved in your global environment:
+ls()
+
+### Delete x
 rm(x)
 
-# Data Types
-class(x)
-x
-### Numeric
+ls() # x has been removed
 
+### You can also wipe your Global Environment clean by clicking the broom on your "Environment" tab in the upper-right pane of your RStudio session.
 
-### Integer
+# Data structures
+## Vector: an ordered group of the SAME type of data. These will be the columns/variables in your data frames and spreadsheets.
+Name <- c("Max", "Tito", "Bella", "Tessa", "Milley")
+Name
+class(Name)
 
+Age <- c(5, 9, 12, 2, 6)
+Age
+class(Age)
 
+# Indexing: means to refer to part of a data scructure by position. R is a one-indexed language and begins counting at the number 1. 
 
+## If we want to extract the third name from the Name vector, we could type:
+Name[3]
 
-##### Coercing (changing) data types
+## If we want to extract the second, third, and fourth names: 
+Name[2:4]
 
+# Data Frame: an ordered group of EQUAL-LENGTH vectors!
+animals <- data.frame(Name, Age)
+animals
+class(animals)
 
-### Character
-Evan = 44
-Evan = 100
-my_name = "Evan"
-(my_name = Evan2)
+# Import data
+## There are many different ways to import data into R, which can handle data of virtually every format. We will stick with .csv (comma-separated values) files for now. 
 
-my_name + my_name
-x + y
-paste(my_name, my_name)
-### Logical 
+## The easiest way to import data is to: 
+## 1. Click the "Import Dataset" button at the top of your "Environment" tab in the upper-right pane of RStudio
+## 2. Then click "From Text (base)..."
+## 3. Navigate your file system to the "Fast-R" folder you downloaded/cloned earlier
+## 4. Select "gapminder.FiveYearData.csv", and a dialog box appears
+## 5. Rename the "Name" field to gap and click "Import". 
+## You should now see the dataset in its entirety pop up in a new tab. This is done by using the View() function.
 
+str(gap)      # displays the compact structure of the data frame
+head(gap)     # shows the first six rows by default
+dim(gap)      # show row x col dimensions 
+nrow(gap)     # print number of rows
+ncol(gap)     # display number of columns
+colnames(gap) # display column names
+rownames(gap) # display row names
 
-### Factor
+# Subseting in one dimension
+## Use the dollar sign to extract just one column from a data frame. First, just type gap$ and press the tab key - the names of the columns will appear as a vector! 
 
+## To extract just the lifeExp column, we could type
+gap$lifeExp
 
-# Data Structures
+## This is useful because we can immediately plug it into something else:
+?hist
+hist(gap$lifeExp)                     # histogram
 
-### Vector
+?cor.test
+cor.test(gap$lifeExp, gap$gdpPercap)  # Pearson correlation
 
-### Data Frame
+# Subsetting in two dimensions with bracket notation
+## Extracting a single column is good, but slicing rows and columns might be better. Remember how we indexed a vector earlier? We wil do the same thing here, but will type the name of the dataset followed by square brackets separated by a comma. Like this:
 
-# Load data from files
+## gap[rows, cols]
 
-# Subsetting your data
+## If we just want rows 5 thru 9 and columns 2 thru 4 we could type:
+gap_small <- gap[5:9, 2:4]
+gap_small
 
-### In one dimension `$`
+## ... but for discontinuous subsets we need to use c(). If we want rows 5 thru 9 and 17 along with columns 2 thru 4 and 6, we could type: 
+gap_small2 <- gap[c(5:9, 17), c(2:4, 6)]
+gap_small2 
 
-### In two dimensions `[ , ]`
-
-# Part 2
-
-# Data summarization
+# Do we have the proper rows and columns?
+colnames(gap)
 
 # Visualization
+## Use data visualizations to communicate potentially complex phenomena in easy to understand ways. 
 
-# Statistical testingtest
+## Base graphics - these graphical funcions come with the base installation of R
 
+### Histogram: illustrate the distribution of one continuous (i.e., numeric or integer) variable:
 
-# Define two numeric variables
-# 1.
-y = 21
-y
-# 2.
-x = 99
-x
+### Default rendering:
+hist(gap$lifeExp)
 
-# Define two text variables
-# 1. 
-game = "Blackjack"
-game
+### Customizations
+hist(gap$lifeExp, # data to be plotted
+     col = "skyblue", # bar color
+     main = "Life Expectancy", # title
+     xlab = "Years", # x-axis label
+     ylab = "Count", # y-axis label
+     xlim = c(20, 90), # x-axis limits
+     ylim = c(0,400), # y-axis limits
+     las = 1) # Label Axis Style
 
-# 2.
-mack = "scholar"
-mack
+### Boxplots: display distribution of a continuous variable, but parsed by a factor (think of the tilde as meaning "by"). The other graphical parameters apply here as well:
+boxplot(gap$lifeExp ~ gap$continent)
 
-# vector = an organized group of the SAME type of data!
-# 1, 2, 400, 5678
-c()
-vec1 = c(1, 2, 400, 5678)
-vec1
+### Scatterplot: display the distributions of two continuous variables - one on the x-axis and one on the y-axis:
+plot(x = gap$lifeExp, 
+     y = gap$gdpPercap)
 
-# square brackets refer to an index (position) of a vector
-vec1[3]
-vec1[1]
-vec1[5]
+## ggplot2
+### Base plotting is good, but the ggplot2 way is better! Manipulating margins, legends, and point colors can be cumbersome. Thankfully, ggplot2 helps us produce publication ready figures more efficiently. 
 
-vec1
-vec2 = c(4, 5)
-vec2
-vec1 * vec2
-
-# define three vectors EACH  with length 5
-# 1. numeric
-num1 = c(1, 3, 5, 7, 9)
-num1
-# 2. numeric
-num2 = c(100, 200, 300, 400, 500)
-num2
-# 3. text/character/string
-char1 = c("one", "two", "three", "four", "five")
-char1
-class(char1)
-
-# make a data frame from num1, num2, and char1
-myData = data.frame(num1, num2, char1)
-myData # "tabular" data
-
-str(myData)
-class(myData)
-
-# use $ to access just a single column!
-myData
-hist(myData$num1, col = "turquoise", main = "COOL!")
-
-summary(myData)
-
-# save your work
-write.csv(myData, file = "myData.csv")
-
-# figure out your working directory with
-getwd()
-
-# import data! 
-# two step process
-# 1. set your working directory
-# 2. read.csv()
-gap = read.csv("gapminder-FiveYearData.csv")
-hist(gap$lifeExp, col = "pink")
-
-
-
-
-
-
-# Load the "gapminder-FiveYearData.csv" data
-# 1. Remember to first set your working directory to the Fast-R folder you downloaded
-#    Session --> Set Working Directory --> Choose Directory
-# 2. Save it in a variable named gap (remember to use the read.csv function!)
-
-# check you working directory
-getwd()
-dir()
-
-x = 5
-
-gap = read.csv("gapminder-FiveYearData.csv")
-gap
-
-# subset our data
-str(gap)
-class(gap)
-gap$lifeExp
-# Histogram - used for one numeric/integer variable
-hist(gap$lifeExp, col = "purple", 
-     main = "Histogram of Life Expectancy",
-     xlab = "Life expectancy (years)",
-     ylab = "Frequency",
-     las = 1)
-
-# Scatterplot - used for TWO numeric/integer variables
-plot(x = gap$lifeExp, y = gap$gdpPercap,
-     xlab = "Life expectancy (years)",
-     ylab = "GDP per capita ($)", 
-     col = gap$continent)
-
-# Scatterplot - the ggplot2 way
+### First, install the ggplot2 package. This physically downloads the files to your computer from CRAN: 
 install.packages("ggplot2")
+
+### ... however, your current R session does not know they are there. Second, import the ggplot2 files into your current session:
 library(ggplot2)
-?ggplot
-# You need three things to make a ggplot
-# 1. data
-# 2. "aes"thetics - define x and y coordinates, colors, shapes, etc.
-# 3. geoms - how to represent your data? points, bars, lines, etc.
-ggplot(data = gap, aes(x = lifeExp, y = gdpPercap, color = continent, shape = continent)) + 
-  geom_point(size = 3, alpha = 0.75) + 
-  ggtitle("Life expectancy versus GDP per capita income") + 
-  xlab("Life expectancy (years)") + 
-  ylab("GDP per capita ($)") + 
-  theme_classic() + 
-  theme(legend.position = "bottom")
+
+### Test that your installation and import was successful by checking the help files:
+?ggplot2
+
+# Statistical testing
+
+# Mini project - A research workflow: 
+
+How might you start a research project? Below is a template to help you get started:
   
-# Boxplot - used when you have one categorical variable and one numeric/integer
-ggplot(data = gap, aes(x = continent, y = lifeExp)) +
-  geom_boxplot(fill = "red")
+  **1. Read literature in your field** What questions could the authors not answer? In which directions do they think research should go? What are your insights? 
+  
+  **2. Develop a research question** Use your domain expertise to brainstorm a few questions that, from a research perspective, are reasonable/doable/testable. 
 
-# summarize your data as well! 
-gap$continent
-table(gap$continent)
-prop.table(table(gap$continent))
+**3. Turn your research question into a set of testable hypotheses** (if null/alternate hypothesis testing is your goal)
 
-table(gap$year, gap$continent)
-table(gap$continent, gap$year)
+**4. Develop data collection protocols/acquire data** Develop protocols for data collection or otherwise acquire data (from your advisor, fieldwork, surveys, API, webscraping, etc.)
 
-summary(gap)
-summary(gap$lifeExp)
-boxplot(gap$lifeExp, las = 1)
-mean(c(1,2,3,4,100))
-median(c(1,2,3,4,100))
+**5. Import the data into R** via `read.csv()`, the import dataset button, the [rio R package](https://cran.r-project.org/web/packages/rio/readme/README.html), etc.
 
-# Challenge! 
-# 1. Create a histogram of population from gap
-hist(gap$pop, col = "darkgreen", xlab = "Number of people")
-# 2. Create a boxplot of population by continent
-boxplot(gap$pop ~ gap$continent)
-ggplot(data = gap, aes(x = continent, y = pop)) + geom_boxplot()
-# 3. Create a scatterplot of population versus lifeExp
-ggplot(gap, aes(x = lifeExp, y = pop, color = continent)) +
-  geom_point()
-# 4. Create a density curve of lifeExp - how do you figure out how to do this?
-ggplot(gap, aes(x = lifeExp, fill = continent)) + 
-  geom_density(alpha = 0.25) #+ 
-  #facet_wrap(~continent)
-# here is some good help: http://www.sthda.com/english/wiki/ggplot2-essentials
+**6. Clean/subset the data**
+  
+  **7. Explore, summarize, and visualize the data** 
+  
+  **8. Analysis**  (exploratory data analysis, hypothesis testing, machine learning, etc.)
 
-library(ggplot2)
-ggplot(data = gap, aes(x = lifeExp, y = gdpPercap, color = continent, shape = continent)) + 
-  geom_point(size = 3, alpha = 0.75) + 
-  ggtitle("Life expectancy versus GDP per capita income") + 
-  xlab("Life expectancy (years)") + 
-  ylab("GDP per capita ($)") + 
-  theme_classic() + 
-  theme(legend.position = "bottom") + 
-  #facet_grid(~continent)
-  facet_wrap(~continent)
-
-# fit a linear regression
-# Can we use gdpPerap to predict lifeExp?
-?lm
-# Y ~ X 
-
-# FIRST STEP! Check for correlation
-?cor.test
-cor.test(gap$lifeExp, gap$gdpPercap)
-
-# now, fit the regression
-gap_lm = lm(gap$lifeExp ~ gap$gdpPercap)
-gap_lm
-summary(gap_lm)
+**9. Draw conclusions based on this process** to add discussion to relevant bodies of knowledge in your field.
