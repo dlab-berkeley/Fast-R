@@ -1,4 +1,4 @@
-![](/shutterstock.png)
+![](/image.png)
 
 # Fast-R
 Need to get up to speed with R in a hurry? This is D-Lab's two-hour introduction to R basics for basic research workflows! 
