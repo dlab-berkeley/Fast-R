@@ -15,7 +15,7 @@ x       # print it to your console
 y <- log(2.4)
 y
 
-z <- x / y
+z <- x / cos(y)
 z
 
 # Functions and arguments
@@ -40,12 +40,12 @@ class(x_char)
 
 ## 4. Logical - TRUE and FALSE only; used for logical testing, data subsetting, and turning function parameters "on" and "off"
 
-"Berkeley" == "berkeley"  # equivalent to (remember, R is case sensitive)
-8 != 7                    # not equivalent to
-3 > 2                     # greater than
-9 <= 9                    # less than/equal to
+"Berkeley" == "berkeley" # equivalent to (remember, R is case sensitive)
+8 != 7 # not equivalent to
+3 > 2 # greater than
+9 <= 9 # less than/equal to
 
-mean(c(1, 5, 7, NA, 8))   # NA
+mean(c(1, 5, 7, NA, 8)) # NA is missing value
 
 ## Using the help files:
 ?mean
@@ -99,13 +99,15 @@ class(animals)
 ## 5. Rename the "Name" field to gap and click "Import". 
 ## You should now see the dataset in its entirety pop up in a new tab. This is done by using the View() function.
 
-str(gap)      # displays the compact structure of the data frame
-head(gap)     # shows the first six rows by default
-dim(gap)      # show row x col dimensions 
-nrow(gap)     # print number of rows
-ncol(gap)     # display number of columns
+str(gap) # displays the compact structure of the data frame
+head(gap) # shows the first six rows by default
+dim(gap) # show row x col dimensions 
+nrow(gap) # print number of rows
+ncol(gap) # display number of columns
 colnames(gap) # display column names
 rownames(gap) # display row names
+summary(gap) # produce six-number summary statistics
+table(gap$continent) # tabulate frequencies for factor/categorical data.
 
 # Subseting in one dimension
 ## Use the dollar sign to extract just one column from a data frame. First, just type gap$ and press the tab key - the names of the columns will appear as a vector! 
@@ -115,10 +117,10 @@ gap$lifeExp
 
 ## This is useful because we can immediately plug it into something else:
 ?hist
-hist(gap$lifeExp)                     # histogram
+hist(gap$lifeExp) # e.g., a histogram
 
 ?cor.test
-cor.test(gap$lifeExp, gap$gdpPercap)  # Pearson correlation
+cor.test(gap$lifeExp, gap$gdpPercap) # Pearson correlation
 
 # Subsetting in two dimensions with bracket notation
 ## Extracting a single column is good, but slicing rows and columns might be better. Remember how we indexed a vector earlier? We wil do the same thing here, but will type the name of the dataset followed by square brackets separated by a comma. Like this:
@@ -175,26 +177,54 @@ library(ggplot2)
 ### Test that your installation and import was successful by checking the help files:
 ?ggplot2
 
+### You need three things to create a ggplot:
+#### 1. data
+#### 2. `aes`thetics (define coordinate system, map colors to points, etc.)
+#### 3. `geom_`s (how should the data actually be represented? Points, bars, lines, etc.)
+
+#### Add a new layer between each ggplot layer with the plus symbol +
+#### `theme` can be used to change non-data customizations
+
+### Produce the base layer:
+ggplot(gap, aes(x = lifeExp, y = gdpPercap))
+
+### Add points by adding a new layer:
+ggplot(gap, aes(x = lifeExp, y = gdpPercap)) + 
+  geom_point()
+
+### Color each point by its corresponding continent by editing `aes()`:
+ggplot(gap, aes(x = lifeExp, y = gdpPercap,
+                color = continent)) + 
+  geom_point()
+
+### Remove the gray background:
+ggplot(gap, aes(x = lifeExp, y = gdpPercap,
+                color = continent)) + 
+  geom_point() + 
+  theme_bw()
+
+### Export:
+#### Click "Export" --> "Save as PDF", change the dimensions and name your file. Then, open this image up in your PDF viewer (default is "Preview" on Mac"), and click "File" --> "Export" and select "TIFF" in the "Format" dropdown menu. Select "JPEG" from the "Compression" menu and set your preferred resolution before clicking save. 
+
 # Statistical testing
+## Perhaps we are interested in seeing if a relationships exist between lifeExp and continent, gdpPercap and continent, and lifeExp and gdpPercap?
+## How do we know if our results are any good? 
+## DISCLAIMER: We are just showing you how statistical testing works in R. There are many assumptions and conditions that must be considered before considering significance testing in your work. Are we violating any assumptions here and how do we find out? 
 
-# Mini project - A research workflow: 
+### One way ANOVA (compare mean variance for two or more samples):
+?aov
+aov_life <- aov(gap$lifeExp ~ gap$continent)
+summary(aov_life)
+TukeyHSD(aov_life)
 
-How might you start a research project? Below is a template to help you get started:
-  
-  **1. Read literature in your field** What questions could the authors not answer? In which directions do they think research should go? What are your insights? 
-  
-  **2. Develop a research question** Use your domain expertise to brainstorm a few questions that, from a research perspective, are reasonable/doable/testable. 
+aov_gdp <- aov(gap$gdpPercap ~ gap$continent)
+summary(aov_gdp)
+TukeyHSD(aov_gdp)
 
-**3. Turn your research question into a set of testable hypotheses** (if null/alternate hypothesis testing is your goal)
+### Pearson correlation (check for linear correlation between variables):
+cor.test(gap$lifeExp, gap$gdpPercap)
 
-**4. Develop data collection protocols/acquire data** Develop protocols for data collection or otherwise acquire data (from your advisor, fieldwork, surveys, API, webscraping, etc.)
-
-**5. Import the data into R** via `read.csv()`, the import dataset button, the [rio R package](https://cran.r-project.org/web/packages/rio/readme/README.html), etc.
-
-**6. Clean/subset the data**
-  
-  **7. Explore, summarize, and visualize the data** 
-  
-  **8. Analysis**  (exploratory data analysis, hypothesis testing, machine learning, etc.)
-
-**9. Draw conclusions based on this process** to add discussion to relevant bodies of knowledge in your field.
+### Fit a linear model - can we use gdpPercap to predict lifeExp? )
+?lm
+lm_gap <- lm(gap$lifeExp ~ gap$gdpPercap)
+summary(lm_gap)

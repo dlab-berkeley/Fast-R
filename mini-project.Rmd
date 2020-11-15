@@ -1,0 +1,50 @@
+---
+title: "Mini-Project"
+author: "D-Lab"
+date: "11/16/2020"
+output: html_document
+---
+
+# Mini project - Research in practice: 
+
+How do you envision a research project? Below is a template to help you get started:
+  
+**1. Read literature in your field** 
+
+What questions could the authors not answer and in which directions do they think research should go? What are your insights for combining multiple existing questions into something novel? What are your expectations for the data and potential results?
+  
+**2. Develop a research question** 
+
+Use your domain expertise to brainstorm a few questions that, from a research perspective, are reasonable/doable/testable/fundable. 
+
+**3. Turn your research question into a set of testable hypotheses** (if null/alternate hypothesis testing is your goal)
+
+... however, significance testing, p-values, and interpretation of results can be tricky. There are  other ways to approach research than this. 
+
+**4. Develop data collection protocols/acquire data** 
+
+Develop protocols for data collection or otherwise acquire data (from your advisor, fieldwork, surveys, API, webscraping, etc.)
+
+**5. Import the data into R** 
+
+How does the `read.csv()` function work, and why might it be preferred to the "Import Dataset" button? Why might the [rio R package](https://cran.r-project.org/web/packages/rio/readme/README.html) be better than either? 
+
+**6. Clean/subset the data**
+
+Extract just the data you want to focus on (if applicable)
+  
+**7. Explore, summarize, and visualize the data** 
+
+Compute summary statistics and visualize variables and relationships of interest that might support your research questions. 
+  
+**8. Analysis**  (exploratory data analysis, hypothesis testing, machine learning, etc.). 
+
+Do your data violate any statistical assumptions? Why/why not?
+
+**9. Draw conclusions based on this process** 
+
+... to interpret your results and add discussion to relevant bodies of knowledge in your field.
+
+### Challenge 1: Use the "gapminder-FiveYearData.csv" dataset to practice going through the steps of this workflow.
+
+### Challenge 2: Use the "heart.csv" dataset to practice going through the steps of this workflow.
