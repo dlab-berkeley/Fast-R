@@ -18,6 +18,9 @@ Need to get up to speed with R in a hurry? This is D-Lab's two-hour introduction
   
 > If you are a Git user, you can clone this repository by opening a terminal, `cd` into the correct location, and type: `git clone git@github.com:dlab-berkeley/Fast-R.git`
 
+# Start running the code
+Open the file "Fast-script.R" to begin. Click the "Run" button or press Ctrl + Enter (PC) or command + Enter (Mac) to run a line of code. 
+
 # Be sure to also utilize free services for UC Berkeley students, faculty, and staff: 
 * The D-Lab workshop calendar: https://dlab.berkeley.edu/calendar-node-field-date
 
