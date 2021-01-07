@@ -29,7 +29,7 @@ Open the file "Fast-script.R" to begin. Place your cursor on a line of runnable 
 # Other D-Lab R workshops
 
 ### Beginner
-* [R Fundamentals](https://github.com/dlab-berkeley/R-Fundamentals) * updates coming soon!
+* [R Fundamentals](https://github.com/dlab-berkeley/R-Fundamentals) 
   
 ### Basic Competency
 * [R Data Wrangling](https://github.com/dlab-berkeley/R-wrang)
